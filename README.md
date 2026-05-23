@@ -1,60 +1,55 @@
-```markdown
+```text
+README.md
+```
+
+````markdown
 # Buffet Report Automation
 
-This project automates the weekly buffet report workflow using Python and Excel VBA.
+Python automation project for preparing and updating weekly Buffet Report data in Excel.
 
-The original process required manually combining multiple Excel files by resort and meal type, cleaning the data, copying it into the main report file, refreshing pivot tables, updating weekly dropdown filters, and saving the report with the latest data date.
-
-This automation reduces manual work, prevents date and week selection errors, and standardizes the report preparation process.
+This project was created to reduce manual Excel work, including combining raw files, cleaning data, appending data into the main report workbook, updating formulas, refreshing pivot tables, filtering latest weeks, and saving the final report with the latest data date.
 
 ---
 
 ## Project Objective
 
-To automate the weekly buffet reporting workflow for multiple resorts and data types.
+The main objective of this project is to automate the weekly Buffet Report workflow and reduce repetitive manual tasks in Excel.
 
-The automation helps with:
+Before automation, the process required opening multiple files, running VBA manually, copying data into the main report file, updating formulas, refreshing pivot tables, and checking report sheets one by one.
 
-- Combining source Excel files from multiple folders
-- Cleaning and preparing data through existing VBA logic
-- Appending cleaned data into the main report workbook
-- Pulling formulas down to new rows
-- Standardizing restaurant names
-- Updating week dropdowns in report tables
-- Refreshing pivot tables
-- Filtering the latest 5 weeks
-- Saving the report using the latest data date
-- Creating a backup before processing
+This automation helps make the process faster, more consistent, and easier to control.
 
 ---
 
 ## Workflow Overview
 
-1. Select the main report file before running the process.
-2. Backup the selected main report file.
-3. Check and reset the VBA workbook if needed.
-4. Read the folder paths from the Control sheet.
-5. Combine all Excel files from each folder into separate sheets.
-6. Run the existing VBA cleaning workflow.
-7. Copy cleaned data into the matching sheet in the main report file.
-8. Fill down formulas for each report sheet.
-9. Replace restaurant names for reporting consistency.
-10. Add process tracking information.
-11. Update weekly dropdown values.
-12. Refresh pivot tables.
-13. Filter the latest 5 weeks.
-14. Save As the final report using the latest data date.
+1. Select the main Buffet Report Excel file
+2. Back up the selected report file before processing
+3. Read input folders from the Control sheet
+4. Combine raw Excel files into working sheets
+5. Run VBA cleaning logic
+6. Append cleaned data into the main report workbook
+7. Fill formulas down to the latest data row
+8. Replace restaurant names for reporting consistency
+9. Update week dropdown values in report tables
+10. Refresh pivot tables
+11. Filter database sheets to show the latest 5 weeks
+12. Save As the report file using the latest data date
 
 ---
 
-## Folder Structure Example
+## Folder Structure
+
+Example working folder:
 
 ```text
 buffe/
 │
 ├── Buffe_Final.py
 ├── Buffe_VBA.xlsm
-├── backup/
+├── 04_Buffet All Resort 260126-170526.xlsx
+│
+├── สำรอง/
 │
 ├── SKC/
 │   ├── ALL/
@@ -76,9 +71,9 @@ buffe/
 
 ---
 
-## Control Sheet Setup
+## Control Sheet Example
 
-The VBA workbook contains a `Control` sheet that stores the folder paths and mapping information.
+The VBA workbook uses a Control sheet to define input folders by branch and data type.
 
 | InputFolder                  | Branch | DataType |
 | ---------------------------- | ------ | -------- |
@@ -94,64 +89,63 @@ The VBA workbook contains a `Control` sheet that stores the folder paths and map
 
 ---
 
-## Tools Used
+## Main Features
 
-* Python
-* pywin32 / win32com
-* Microsoft Excel
-* Excel VBA
-* Pivot Table
-* Excel formulas
-* Data validation dropdowns
+### 1. File Backup
 
----
+Before the automation starts, the selected main report file is copied into the backup folder.
 
-## Key Features
+This prevents data loss if an error occurs during processing.
 
-### 1. Automated File Combination
+### 2. Auto Combine Raw Files
 
-The script reads all Excel files inside each input folder and combines them into the VBA workbook as separate sheets.
+The script loops through all input folders and combines Excel files into sheets for each branch and data type.
 
-### 2. Existing VBA Logic Integration
+### 3. VBA Cleaning Process
 
-The automation keeps the original VBA cleaning logic and runs it through Python instead of manually clicking each macro.
+The automation works together with existing VBA logic in Excel.
 
-### 3. Main Report Update
+The Python script controls the workflow, while VBA handles the original cleaning rules.
 
-Cleaned data is copied into the correct sheet in the main report workbook based on branch and data type.
+### 4. Append Data to Main Report
 
-### 4. Formula Fill Down
+Cleaned data is copied into the correct report sheets, such as:
 
-The script automatically fills formulas down to the latest appended rows.
+* SKC All
+* SKC Dinner
+* SNT All
+* SNT Dinner
+* SPN All
+* SPN Dinner
+* SPN Lunch
+* SYY All
+* SYY Dinner
 
-Formula columns differ by sheet:
+### 5. Formula Fill Down
 
-| Sheet Type  | Formula Columns |
-| ----------- | --------------- |
-| ALL / LUNCH | J:N             |
-| DINNER      | J:Q             |
+After new data is added, formulas are filled down automatically based on the latest data row.
 
-### 5. Restaurant Name Standardization
+### 6. Restaurant Name Standardization
 
-Some restaurant names are standardized after data is inserted, for example:
+Some restaurant names are replaced for consistency, for example:
 
-| Original Name                     | Standardized Name             |
-| --------------------------------- | ----------------------------- |
-| All By The Sea Restaurant And Bar | By The Sea Restaurant And Bar |
-| All Chantara Restaurant           | Chantara Restaurant           |
-| All Saaitara Restaurant           | Saaitara Restaurant           |
+* All By The Sea Restaurant And Bar → By The Sea Restaurant And Bar
+* All Chantara Restaurant → Chantara Restaurant
+* All Saaitara Restaurant → Saaitara Restaurant
 
-### 6. Week Dropdown Update
+### 7. Week Dropdown Update
 
-The script checks the latest week from the inserted data and adds it into dropdown sources without deleting old week values.
+The script checks the latest week from the newly added data and adds it into dropdown source lists without deleting old weeks.
 
-### 7. Pivot Refresh and Latest Week Filter
+This allows report users to select the latest week from the table dropdown.
 
-Pivot tables are refreshed and filtered to show only the latest 5 weeks.
+### 8. Pivot Refresh and Latest Week Filter
 
-### 8. Auto Save As
+Pivot tables are refreshed, and database sheets are filtered to show the latest 5 weeks.
 
-The final report is saved with the latest data date from the inserted data.
+### 9. Auto Save As by Latest Date
+
+The final report file is saved with the latest data date from the appended data.
 
 Example:
 
@@ -161,32 +155,44 @@ Example:
 
 ---
 
-## Business Impact
+## Tools Used
 
-Before automation, the report preparation required many manual Excel steps and was at risk of human error, especially when copying data, updating formulas, selecting weeks, and saving the file name.
+* Python
+* Excel VBA
+* Microsoft Excel
+* win32com / pywin32
+* OpenPyXL
+* Pandas
 
-After automation, the workflow became more consistent and easier to repeat every report cycle.
+---
 
-Main improvements:
+## Skills Demonstrated
 
-* Reduced manual copy-paste work
-* Reduced risk of wrong week selection
-* Reduced risk of incorrect report file name
-* Improved report consistency
-* Created backup before editing files
-* Made the process easier to hand over and reuse
+* Excel automation
+* VBA and Python integration
+* Report workflow automation
+* Data cleaning
+* Data validation
+* Pivot table refresh automation
+* Folder-based data processing
+* Error handling and backup control
+* Hospitality reporting process improvement
+
+---
+
+## Result
+
+This project helps reduce manual reporting work and improves report consistency.
+
+The workflow can be run from Python, while still keeping the existing Excel and VBA process that users are familiar with.
 
 ---
 
 ## Notes
 
-This project was designed for an internal weekly buffet report workflow.
+This repository uses mock or sanitized data only.
 
-Mock data is used for portfolio demonstration. Real company data is not included in this repository.
+Real business data, supplier information, financial details, and internal company files are not included.
 
-````
-
-```text
-Add README for buffet report automation project
-````
+```
 
